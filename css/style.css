@@ -1,0 +1,1199 @@
+/* ============================================
+   全域重置與基礎
+   ============================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0a0a1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Courier New', monospace;
+  color: #ecf0f1;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* ============================================
+   大廳 — 全螢幕 App 風格
+   ============================================ */
+#lobby-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #0a0a1a 0%, #1a1a2e 100%);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Courier New', monospace;
+}
+
+/* ----- 頂部標題列 ----- */
+#lobby-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(241, 196, 15, 0.15);
+  flex-shrink: 0;
+  min-height: 52px;
+}
+#lobby-title {
+  font-size: 20px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #f1c40f, #f39c12);
+  -webkit-background-clip: text;
+  background-clip: text;  
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 1px;
+}
+#settings-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #bdc3c7;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+#settings-btn:hover {
+  background: rgba(241, 196, 15, 0.12);
+  border-color: #f1c40f;
+  color: #f1c40f;
+}
+
+/* ----- 頂部資訊列（三項數據） ----- */
+#lobby-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 6px 8px 6px;
+  background: linear-gradient(180deg, #0f3460 0%, #0a2540 100%);
+  flex-shrink: 0;
+  border-bottom: 1px solid #1e4d7b;
+  font-family: 'Courier New', monospace;
+}
+#lobby-stats .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+#lobby-stats .stat-icon {
+  font-size: 22px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+#lobby-stats .stat-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+#lobby-stats .stat-label {
+  font-size: 9px;
+  color: #7a9cc6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+#lobby-stats .stat-value {
+  font-size: 15px;
+  font-weight: bold;
+  color: #f1c40f;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+@media screen and (max-width: 600px) {
+  #lobby-stats {
+    padding: 8px 4px 6px 4px;
+  }
+  #lobby-stats .stat-item {
+    gap: 4px;
+  }
+  #lobby-stats .stat-icon {
+    font-size: 18px;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+  }
+  #lobby-stats .stat-label {
+    font-size: 8px;
+  }
+  #lobby-stats .stat-value {
+    font-size: 13px;
+  }
+}
+
+/* ----- 主內容區域 ----- */
+.lobby-page {
+  display: none;
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 18px 12px 18px;
+}
+.lobby-page.active {
+  display: block;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f1c40f;
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(241, 196, 15, 0.15);
+  margin-bottom: 14px;
+}
+
+/* ===== 首頁 ===== */
+#home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 55vh;
+  text-align: center;
+}
+#home-title {
+  font-size: 40px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #f1c40f, #e67e22);
+  -webkit-background-clip: text;
+  background-clip: text;  
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+#home-stats {
+  font-size: 16px;
+  line-height: 2.2;
+  margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 16px 28px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  min-width: 200px;
+}
+#home-stats div {
+  margin: 2px 0;
+  color: #bdc3c7;
+}
+#home-stats div span {
+  color: #ecf0f1;
+  font-weight: bold;
+}
+#start-game-btn {
+  padding: 16px 52px;
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(46, 204, 113, 0.25);
+  transition: all 0.2s;
+  margin-bottom: 16px;
+  font-family: 'Courier New', monospace;
+}
+#start-game-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 32px rgba(46, 204, 113, 0.35);
+}
+#home-recipe-count {
+  font-size: 13px;
+  color: #7f8c8d;
+}
+#home-recipe-count span {
+  color: #f1c40f;
+  font-weight: bold;
+}
+
+/* ===== 成長頁面 ===== */
+#draw-section {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+#draw-info {
+  font-size: 14px;
+  color: #f1c40f;
+  margin-bottom: 8px;
+}
+#draw-recipe-btn {
+  padding: 12px 0;
+  font-size: 15px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #8e44ad, #9b59b6);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Courier New', monospace;
+  transition: all 0.2s;
+}
+#draw-recipe-btn:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 20px rgba(155, 89, 182, 0.3);
+}
+#draw-result {
+  margin-top: 10px;
+  font-size: 14px;
+  min-height: 28px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* 升級卡片 */
+#lobby-upgrades button {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ecf0f1;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  transition: all 0.2s;
+}
+#lobby-upgrades button:hover:not(:disabled) {
+  border-color: #f1c40f;
+  background: rgba(241, 196, 15, 0.06);
+}
+#lobby-upgrades button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* =============================================
+   圖鑑頁面 — 新版卡片 + 血條進度
+   ============================================= */
+
+/* ---- 卡片容器 ---- */
+.recipe-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.recipe-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(241, 196, 15, 0.3);
+  transform: scale(1.01);
+}
+
+/* ---- 左側預覽色塊 ---- */
+.recipe-preview {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+/* ---- 中間資訊 ---- */
+.recipe-info {
+  flex: 1;
+  min-width: 0;
+}
+.recipe-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #ecf0f1;
+}
+.recipe-tier {
+  font-size: 12px;
+  font-weight: bold;
+}
+.recipe-level {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+/* ---- 右側血條進度 ---- */
+.recipe-progress-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+.recipe-progress-bar {
+  width: 100%;
+  height: 14px;
+  background: #1e2a3a;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1px solid #2c3e50;
+  position: relative;
+}
+.recipe-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2ecc71, #f1c40f);
+  border-radius: 7px;
+  transition: width 0.3s;
+  min-width: 4px;
+}
+.recipe-progress-text {
+  font-size: 10px;
+  color: #fff;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 6px rgba(0,0,0,0.9);
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+}
+.recipe-progress-label {
+  font-size: 10px;
+  color: #7f8c8d;
+  margin-top: 2px;
+}
+
+/* ===== 圖鑑稀有度分類標籤 ===== */
+#collection-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  padding: 2px 0 6px 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+#collection-tabs::-webkit-scrollbar {
+  display: none;
+}
+.collection-tab {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.05);
+  color: #888;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Courier New', monospace;
+}
+.collection-tab:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ecf0f1;
+}
+.collection-tab.active {
+  background: rgba(241, 196, 15, 0.15);
+  border-color: #f1c40f;
+  color: #f1c40f;
+}
+.collection-tab .tab-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* =============================================
+   配方詳情彈窗（點擊卡片後跳出）
+   ============================================= */
+#recipe-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+#recipe-detail-overlay.active {
+  display: flex;
+}
+#recipe-detail-panel {
+  background: linear-gradient(145deg, #1a1a2e, #0f0f1f);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  width: 92%;
+  max-width: 420px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 0;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8);
+}
+#detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: sticky;
+  top: 0;
+  background: #1a1a2e;
+  border-radius: 20px 20px 0 0;
+  z-index: 2;
+}
+#detail-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#detail-preview-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+#detail-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ecf0f1;
+}
+#detail-tier-badge {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
+}
+#detail-close-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  color: #bdc3c7;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+#detail-close-btn:hover {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+#detail-body {
+  padding: 18px 20px 22px;
+}
+.detail-section {
+  margin-bottom: 16px;
+}
+.detail-section-title {
+  font-size: 12px;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.detail-description {
+  font-size: 14px;
+  color: #bdc3c7;
+  line-height: 1.5;
+  background: rgba(0,0,0,0.2);
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+.detail-recipe-slots {
+  display: flex;
+  gap: 8px;
+}
+.detail-slot {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 2px solid #555;
+}
+
+/* 屬性面板數值微調 */
+.detail-attr-value {
+  font-weight: bold;
+}
+.detail-attr-diff {
+  font-size: 10px;
+  margin-left: 4px;
+}
+.detail-attr-diff.positive {
+  color: #2ecc71;
+}
+.detail-attr-diff.negative {
+  color: #e74c3c;
+}
+
+.detail-level-progress {
+  margin-top: 6px;
+}
+.detail-level-bar {
+  width: 100%;
+  height: 16px;
+  background: #1e2a3a;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #2c3e50;
+  position: relative;
+}
+.detail-level-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  border-radius: 8px;
+  transition: width 0.3s;
+}
+.detail-level-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(0,0,0,0.9);
+}
+.detail-upgrade-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.detail-upgrade-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 8px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 4px;
+  color: #bdc3c7;
+}
+.detail-upgrade-item.current {
+  color: #f1c40f;
+  border-left: 2px solid #f1c40f;
+  background: rgba(241, 196, 15, 0.05);
+}
+.detail-upgrade-item .upgrade-lv {
+  color: #888;
+  min-width: 30px;
+}
+.detail-upgrade-item .upgrade-desc {
+  text-align: right;
+}
+
+/* ===== 好友頁面 ===== */
+.page-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 20px;
+  font-weight: bold;
+  color: #f1c40f;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #0f3460;
+  margin-bottom: 12px;
+}
+.friend-code-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: normal;
+  color: #aaa;
+}
+.friend-code-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: #f1c40f;
+  background: #16213e;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 2px;
+}
+#copy-friend-code-btn {
+  background: none;
+  border: 1px solid #555;
+  color: #ecf0f1;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#copy-friend-code-btn:hover {
+  background: #333;
+  border-color: #f1c40f;
+}
+
+#friends-input-area {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+#friends-input-area input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ecf0f1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  font-family: 'Courier New', monospace;
+}
+#friends-input-area input:focus {
+  outline: none;
+  border-color: #f1c40f;
+}
+#friends-input-area button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+}
+#friends-list div {
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#friends-list .remove-friend-btn {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.15);
+  border-radius: 6px;
+  padding: 2px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ===== 排行頁面 ===== */
+#leaderboard-list div {
+  padding: 10px 14px;
+  margin-bottom: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  font-size: 14px;
+}
+#leaderboard-list .highlight {
+  border-left: 3px solid #f1c40f;
+  background: rgba(241, 196, 15, 0.06);
+}
+.add-friend-from-leaderboard-btn {
+  background: none;
+  border: 1px solid #555;
+  color: #f1c40f;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 4px;
+}
+.add-friend-from-leaderboard-btn:hover {
+  background: #333;
+  border-color: #f1c40f;
+}
+
+/* ===== 底部導航列 ===== */
+#bottom-nav {
+  display: flex;
+  background: rgba(0, 0, 0, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+  padding: 8px 0 env(safe-area-inset-bottom) 0;
+  backdrop-filter: blur(12px);
+}
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 8px 0;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 26px;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: 'Courier New', monospace;
+  position: relative;
+  border-radius: 0;
+}
+.nav-btn span {
+  font-size: 13px;
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+  font-weight: bold;
+}
+.nav-btn.active {
+  color: #f1c40f;
+}
+.nav-btn.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 3px;
+  background: linear-gradient(90deg, #f1c40f, #f39c12);
+  border-radius: 0 0 4px 4px;
+}
+.nav-btn:hover {
+  color: #f1c40f;
+}
+
+/* ============================================
+   設定彈窗
+   ============================================ */
+#settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+#settings-overlay[style*="display:flex"] {
+  display: flex;
+}
+#settings-panel {
+  background: linear-gradient(145deg, #1a1a2e, #0f0f1f);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  width: 92%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 0;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+}
+#settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 18px;
+  font-weight: bold;
+  color: #f1c40f;
+}
+#settings-close-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  color: #bdc3c7;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+#settings-close-btn:hover {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+#settings-body {
+  padding: 18px 20px 22px;
+}
+.settings-section {
+  margin-bottom: 18px;
+}
+.settings-label {
+  font-size: 13px;
+  color: #7f8c8d;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+#save-code-display {
+  font-size: 26px;
+  font-weight: bold;
+  color: #f1c40f;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px 16px;
+  border-radius: 12px;
+  text-align: center;
+  letter-spacing: 4px;
+  margin-bottom: 8px;
+  font-family: 'Courier New', monospace;
+}
+#copy-code-btn {
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #2980b9, #3498db);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  font-family: 'Courier New', monospace;
+  transition: all 0.2s;
+}
+#copy-code-btn:hover {
+  transform: scale(1.01);
+}
+#restore-area {
+  display: flex;
+  gap: 8px;
+}
+#restore-area input {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ecf0f1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  font-family: 'Courier New', monospace;
+}
+#restore-area input:focus {
+  outline: none;
+  border-color: #f1c40f;
+}
+#restore-area button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #e67e22, #f39c12);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+}
+
+/* ============================================
+   結算畫面
+   ============================================ */
+#result-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #0a0a1a, #1a1a2e);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ecf0f1;
+  padding: 24px;
+  z-index: 500;
+}
+#result-screen[style*="display:block"] {
+  display: flex;
+}
+#result-screen h2 {
+  font-size: 34px;
+  color: #e74c3c;
+  margin-bottom: 16px;
+  text-shadow: 0 0 40px rgba(231, 76, 60, 0.15);
+}
+#result-stats {
+  text-align: center;
+  font-size: 17px;
+  line-height: 2.2;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 20px 32px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  min-width: 220px;
+  margin-bottom: 20px;
+}
+#result-stats div {
+  margin: 2px 0;
+  color: #bdc3c7;
+}
+#result-stats div span {
+  color: #ecf0f1;
+  font-weight: bold;
+}
+#back-to-lobby-btn {
+  padding: 14px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #2980b9, #3498db);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  transition: all 0.2s;
+  box-shadow: 0 4px 24px rgba(41, 128, 185, 0.25);
+}
+#back-to-lobby-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 32px rgba(41, 128, 185, 0.35);
+}
+
+/* ============================================
+   遊戲畫面
+   ============================================ */
+#game-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #0a0a1a;
+  padding: 8px;
+}
+#game-screen[style*="display:block"] {
+  display: flex;
+}
+#rotate-hint {
+  display: none;
+}
+@media screen and (max-width: 600px) and (orientation: portrait) {
+  #rotate-hint {
+    display: block;
+    color: #f1c40f;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+}
+#hud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  user-select: none;
+  justify-content: center;
+}
+#canvas-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+#canvas-container canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.06);
+}
+
+/* 局內配方圖鑑按鈕 */
+#in-game-collection-btn {
+  position: absolute;
+  top: 50px;
+  right: 8px;
+  z-index: 10;
+  background: rgba(0,0,0,0.7);
+  color: #f1c40f;
+  border: 1px solid #555;
+  border-radius: 8px;
+  font-size: 20px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+#in-game-collection-btn:hover {
+  background: rgba(0,0,0,0.9);
+  border-color: #f1c40f;
+}
+
+/* 局內配方圖鑑面板 */
+#in-game-collection-panel {
+  position: absolute;
+  top: 50px;
+  right: 8px;
+  width: 280px;
+  max-height: 70vh;
+  background: rgba(0,0,0,0.92);
+  border: 2px solid #f1c40f;
+  border-radius: 10px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#in-game-collection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid #333;
+  flex-shrink: 0;
+}
+#in-game-collection-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #f1c40f;
+}
+#in-game-collection-close-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+#in-game-collection-close-btn:hover {
+  color: #e74c3c;
+}
+#in-game-collection-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 12px;
+}
+#in-game-collection-list .mini-recipe {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+}
+#in-game-collection-list .mini-recipe:last-child {
+  border-bottom: none;
+}
+.mini-preview {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.mini-info {
+  flex: 1;
+  min-width: 0;
+}
+.mini-name {
+  font-size: 12px;
+  color: #ecf0f1;
+}
+.mini-tier {
+  font-size: 10px;
+  font-weight: bold;
+}
+.mini-slots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.mini-slot {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid #555;
+}
+.mini-expand-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.mini-expand-btn:hover {
+  color: #f1c40f;
+}
+
+/* 展開的詳細資訊 */
+.recipe-inline-detail {
+  padding: 6px 8px 8px 8px;
+  margin-top: 4px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 6px;
+  font-size: 11px;
+  color: #aaa;
+}
+.recipe-inline-detail .detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 2px 0;
+}
+.recipe-inline-detail .detail-upgrades {
+  margin-top: 4px;
+  color: #888;
+}
+
+/* 手機橫屏優化 */
+@media screen and (max-width: 900px) and (orientation: landscape) {
+  #game-screen {
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    padding: 4px;
+  }
+  #canvas-container {
+    max-width: none;
+    width: auto;
+    height: 70vh;
+  }
+  #canvas-container canvas {
+    width: auto;
+    height: 100%;
+  }
+  #hud {
+    font-size: 12px;
+    gap: 8px 14px;
+    padding: 4px 12px;
+  }
+}
+
+canvas {
+  touch-action: none !important;
+}
